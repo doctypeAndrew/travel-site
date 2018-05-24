@@ -981,8 +981,14 @@ a {
 @media (min-width: 800px) {
 
 .site-header {
-    background-color: rgba(47,85,114, 0.3)
+    position: fixed;
+    background-color: rgba(47,85,114, 0.3);
+    transition: all 0.4s ease-out
 }
+
+    .site-header--dark {
+      background-color: rgba(23, 51, 72, 0.85);
+    }
   }
 
 @media (min-width: 800px) {
@@ -1009,8 +1015,14 @@ a {
 .site-header__logo {
       left: auto;
       -webkit-transform: translateX(0);
-              transform: translateX(0)
+              transform: translateX(0);
+      transition: all 0.4s ease-out
   }
+
+      .site-header--dark .site-header__logo {
+        -webkit-transform: scale(0.57);
+                transform: scale(0.57);
+      }
   }
 
 .site-header__logo__graphic {
@@ -1192,6 +1204,10 @@ a {
       padding: 12px 0px;
       background-color: transparent
   }
+
+      .primary-nav a.is-current-link {
+        color: #fabb69;
+      }
   }
 
 .reveal-item {
