@@ -4,17 +4,20 @@ const path = require('path');
 module.exports = {
     mode: 'production',
   // set this to your entry point
-  entry: "./app/assets/scripts/App.js",
+  entry: {
+    App: "./app/assets/scripts/App.js",
+    Vendor: "./app/assets/scripts/Vendor.js"
+  },
 
   // change this to your output path
   output: {
     path: path.resolve(__dirname,'./app/temp/scripts'),
-    filename: "App.js",
+    filename: "[name].js",
     publicPath: "/assets/"
   },
 
   // create a map file for debugging
-  devtool: 'source-map',
+  //devtool: 'source-map',
 
   // configure the loaders
   module: {
