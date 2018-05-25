@@ -36,7 +36,7 @@
       transition: all 0.4s ease-out;
 
       .site-header--dark & {
-        transform: scale(0.57);
+        transform: scale(0.56);
       }
     }
   }
