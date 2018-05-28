@@ -1,3 +1,3 @@
-import '../../temp/scripts/modernizr.js'
+import '../../temp/scripts/modernizr';
 import 'picturefill';
 import 'lazysizes';
