@@ -10,18 +10,18 @@ browserSync = require('browser-sync').create();
 gulp.task('previewDist', function(){
     browserSync.init({
         server: {
-            baseDir: 'dist'
+            baseDir: 'docs'
         },
         browser: 'google chrome',
         notify: false
     });
 });
 
-gulp.task('deleteDistFolder', function(){
-    return del('./dist');
+gulp.task('deleteDistFolder', ['icons'],function(){
+    return del('./docs');
 });
 
-gulp.task('copyGeneralFiles', ['deleteDistFolder', 'icons'], function(){
+gulp.task('copyGeneralFiles', ['deleteDistFolder'], function(){
     var pathsToCopy = [
         './app/**/*',
         '!./app/index.html',
@@ -32,26 +32,30 @@ gulp.task('copyGeneralFiles', ['deleteDistFolder', 'icons'], function(){
         '!./app/temp/**'
     ]
     return gulp.src(pathsToCopy)
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./docs'));
 });
 
-gulp.task('optimizeImages', ['deleteDistFolder','styles', 'scripts', 'copySpriteGraphic'], function(){
+gulp.task('optimizeImages', ['deleteDistFolder','styles', 'scripts'], function(){
     return gulp.src(['./app/assets/images/**/*', '!./app/assets/images/icons', '!./app/assets/images/icons/**/*'])
         .pipe(imagemin({
             interlaced: true,
             progressive: true,
             multipass: true
         }))
-        .pipe(gulp.dest('./dist/assets/images'));
+        .pipe(gulp.dest('./docs/assets/images'));
 });
 
-gulp.task('usemin', ['deleteDistFolder'], function(){
+gulp.task('useminTrigger', ['deleteDistFolder'], function(){
+    gulp.start('usemin');
+});
+
+gulp.task('usemin', function(){
     return gulp.src('./app/index.html')
         .pipe(usemin({
             css: [function() {return rev()}, function() {return cssnano()}],
             js: [function() {return rev()}, function() {return uglify()}]
         }))
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./docs'));
 });
 
-gulp.task('build',['deleteDistFolder','copyGeneralFiles', 'optimizeImages', 'usemin']);
+gulp.task('build',['deleteDistFolder','copyGeneralFiles', 'optimizeImages', 'useminTrigger']);
